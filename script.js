@@ -86,16 +86,16 @@ let isAutoSlide = true; // Auto slideshow default on with Syarifa's photos
 
 // Rejection phrases
 const NO_PHRASES = [
-  'Enggak',
+  'Enggak ah',
   'Yakin gamau? 🥺',
   'Coba pikirin lagi dong...',
   'Masa gamau siiih 😭',
-  'Jangan gitu dong...',
-  'Tombol IYA makin gede lho! 😂',
-  'Pencet yang pink ajaa ✨',
+  'sakit hati sii aku ditolak...',
+  'PENCET GAK IYAANYA!!',
+  'Pencet yang pink ajaa sayang.. ✨',
   'Gak ada pilihan lain pokoknya!',
   'Ayo dong pliss 💖',
-  'Udah takdirnya pencet IYA! 😉'
+  'Udah takdirnya pencet IYAAA! 😉'
 ];
 
 let noCount = 0;
@@ -109,7 +109,7 @@ const details = {
   dateTime: 'Malam ini pukul 18.30 (dijemput di depan gerbang biru)',
   dresscode: 'Casual & Santai (Kaos/Outer yang nyaman & wangi)',
   transportation: 'pake rebecca dulu lah ya, helikopter masih dipake prabowo 🛵💨',
-  specialNotes: 'Siapin senyuman terindah dan perut kosong yaa sayang! 😊💖'
+  specialNotes: 'Jangan crop top an dut, dingin.'
 };
 
 // Music Player Logic (The 1975 - Love It If We Made It)
@@ -127,7 +127,6 @@ function tryPlayMusic() {
           updateMusicUI(true);
         })
         .catch(() => {
-          // Browser prevented autoplay without interaction, wait for first click/tap
           isMusicPlaying = false;
           updateMusicUI(false);
         });
@@ -466,6 +465,32 @@ function randomBackground() {
   const rand = Math.floor(Math.random() * BACKGROUNDS.length);
   currentBgIndex = rand;
   setBackground(BACKGROUNDS[rand].url);
+}
+
+// Card Transparency & Photo Visibility Controls
+let transparencyMode = 0; // 0: Semi-translucent Glass (default), 1: Ultra Clear Glass, 2: Solid
+const TRANSPARENCY_STYLES = [
+  { label: 'Kaca Bersih ✨', cardClass: 'bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-white/60 dark:border-white/10' },
+  { label: 'Super Bening 👁️', cardClass: 'bg-white/50 dark:bg-slate-950/50 backdrop-blur-xs border-white/40 dark:border-white/10 shadow-2xl' },
+  { label: 'Solid ⚪', cardClass: 'bg-white/95 dark:bg-slate-900/95 backdrop-blur-none border-rose-100 dark:border-slate-800' }
+];
+
+function toggleCardTransparency() {
+  transparencyMode = (transparencyMode + 1) % TRANSPARENCY_STYLES.length;
+  applyTransparency();
+}
+
+function applyTransparency() {
+  const card = document.getElementById('main-card');
+  const label = document.getElementById('glass-label');
+  if (!card) return;
+
+  // Remove existing transparency classes
+  card.className = 'w-full max-w-xl rounded-[28px] sm:rounded-[44px] p-6 sm:p-10 shadow-2xl transition-all duration-300 text-center ' + TRANSPARENCY_STYLES[transparencyMode].cardClass;
+  
+  if (label) {
+    label.innerText = TRANSPARENCY_STYLES[transparencyMode].label;
+  }
 }
 
 // Dark Mode
