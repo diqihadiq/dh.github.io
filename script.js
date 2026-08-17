@@ -71,10 +71,10 @@ function playLockSound() {
 
 // Background options with user's specific files: bg1.JPEG to bg4.JPEG
 const BACKGROUNDS = [
-  { id: 'user-bg1', name: 'Foto 1 (bg1.JPEG)', url: './backgrounds/bg1.JPEG' },
-  { id: 'user-bg2', name: 'Foto 2 (bg2.JPEG)', url: './backgrounds/bg2.JPEG' },
-  { id: 'user-bg3', name: 'Foto 3 (bg3.JPEG)', url: './backgrounds/bg3.JPEG' },
-  { id: 'user-bg4', name: 'Foto 4 (bg4.JPEG)', url: './backgrounds/bg4.JPEG' },
+  { id: 'user-bg1', name: 'Foto 1 (bg1.jpeg)', url: './backgrounds/bg1.jpeg' },
+  { id: 'user-bg2', name: 'Foto 2 (bg2.jpeg)', url: './backgrounds/bg2.jpeg' },
+  { id: 'user-bg3', name: 'Foto 3 (bg3.jpeg)', url: './backgrounds/bg3.jpeg' },
+  { id: 'user-bg4', name: 'Foto 4 (bg4.jpeg)', url: './backgrounds/bg4.jpeg' },
   { id: 'soft-pastel', name: 'Soft Pastel (Default)', url: '' },
   { id: 'night-city', name: 'City Night Lights', url: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1600&q=80' },
   { id: 'cozy-cafe', name: 'Cozy Cafe', url: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80' }
