@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Undangan Date Malem Ini 💌</title>
+    <meta name="description" content="Website ajakan kencan malam ini responsif dan siap jalan langsung di GitHub Pages." />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Canvas Confetti CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+    <style>
+      body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+      }
+      .font-serif, .serif {
+        font-family: 'Playfair Display', Georgia, serif;
+      }
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        20%, 60% { transform: translateX(-6px); }
+        40%, 80% { transform: translateX(6px); }
+      }
+      .shake {
+        animation: shake 0.35s ease-in-out;
+      }
+    </style>
+  </head>
+  <body class="min-h-[100dvh] w-full bg-[#FFF5F7] text-gray-800 dark:bg-[#120e14] dark:text-slate-100 transition-colors duration-300 relative flex flex-col justify-between overflow-x-hidden antialiased">
+
+    <!-- Background Layer with Transition -->
+    <div id="bg-layer" class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+      <img id="bg-image" src="" alt="Background" class="w-full h-full object-cover object-center absolute inset-0 opacity-0 transition-opacity duration-1000" />
+      <div class="absolute inset-0 bg-gradient-to-b from-rose-950/25 via-white/80 to-white/95 dark:from-slate-950/80 dark:via-slate-950/85 dark:to-slate-950/95 backdrop-blur-[2px] transition-colors duration-500"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="relative z-10 w-full min-h-[100dvh] flex flex-col justify-between px-3.5 sm:px-6 py-4 sm:py-8 max-w-3xl mx-auto">
+      
+      <!-- Top Navbar Header -->
+      <header class="flex items-center justify-between w-full mb-3 sm:mb-6 px-1">
+        <div class="flex items-center gap-2 sm:gap-2.5">
+          <div class="w-8 h-8 sm:w-9 sm:h-9 bg-rose-500 text-white rounded-full flex items-center justify-center shadow-md shadow-rose-200 dark:shadow-none shrink-0">
+            💖
+          </div>
+          <span class="font-serif font-bold text-sm sm:text-lg tracking-tight text-gray-800 dark:text-gray-100">
+            Date<span class="text-rose-500">Night</span>
+          </span>
+        </div>
+
+        <div class="flex items-center gap-1.5 sm:gap-2">
+          <!-- Ganti Foto Background Button -->
+          <button
+            type="button"
+            onclick="openBgModal()"
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 dark:bg-slate-800/90 border border-rose-100 dark:border-slate-700 text-gray-700 dark:text-gray-200 hover:text-rose-600 text-xs font-semibold shadow-xs cursor-pointer transition-all"
+          >
+            📸 <span class="hidden xs:inline sm:inline">Ganti Foto</span>
+          </button>
+
+          <!-- Dark mode toggle -->
+          <button
+            type="button"
+            onclick="toggleDarkMode()"
+            class="p-2 sm:p-2.5 rounded-full bg-white/90 dark:bg-slate-800/90 border border-rose-100 dark:border-slate-700 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white shadow-xs cursor-pointer"
+            title="Toggle Dark Mode"
+          >
+            🌓
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Content Card Container -->
+      <main class="flex-1 flex items-center justify-center py-2 sm:py-4">
+        <div class="w-full max-w-xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-[28px] sm:rounded-[44px] p-6 sm:p-10 shadow-2xl shadow-rose-950/10 dark:shadow-black/50 border border-rose-100/60 dark:border-slate-800/80 transition-all text-center">
+
+          <!-- STEP 1: QUESTION -->
+          <div id="step-1" class="flex flex-col items-center">
+            <div class="relative mb-4 sm:mb-6">
+              <div class="text-5xl sm:text-6xl select-none">🌹</div>
+              <div id="reject-counter" class="hidden absolute -bottom-2 -right-3 sm:-right-4 bg-rose-500 text-white text-[10px] sm:text-[11px] font-bold px-2 sm:px-2.5 py-0.5 rounded-full shadow-xs whitespace-nowrap">
+                Ditolak 1x 😜
+              </div>
+            </div>
+
+            <h1 id="question-heading" class="font-serif text-xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100 leading-snug mb-2 sm:mb-3">
+              Malem ini mau keluar sama aku gak?
+            </h1>
+            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 max-w-sm mx-auto mb-6 sm:mb-8">
+              Jalan-jalan santai, kulineran, dan ngobrol seru bareng menikmati malam ini! ✨
+            </p>
+
+            <!-- Buttons Area -->
+            <div class="w-full flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-5 min-h-[130px] relative px-2">
+              <!-- YES BUTTON -->
+              <button
+                id="btn-yes"
+                type="button"
+                onclick="handleAccept()"
+                class="bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-full shadow-lg shadow-rose-200 dark:shadow-none flex items-center justify-center gap-2 cursor-pointer transition-all z-30 whitespace-nowrap px-8 py-3.5 text-base"
+              >
+                💕 Iya, Mau!
+              </button>
+
+              <!-- NO BUTTON -->
+              <button
+                id="btn-no"
+                type="button"
+                onclick="handleReject()"
+                class="bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full font-bold transition-all shadow-xs cursor-pointer whitespace-nowrap text-xs sm:text-sm"
+              >
+                Enggak
+              </button>
+            </div>
+
+            <div id="reject-hint" class="hidden mt-4 sm:mt-6 flex items-center gap-1.5 text-[11px] sm:text-xs text-rose-500 bg-rose-50 dark:bg-rose-950/40 px-3.5 sm:px-4 py-1.5 rounded-full border border-rose-100 dark:border-rose-900/40">
+              <span>⚠️ Petunjuk: Semakin kamu tolak, tombol Iya makin besar! 😆</span>
+            </div>
+          </div>
+
+          <!-- STEP 2: DRESSCODE & CONCEPT -->
+          <div id="step-2" class="hidden flex flex-col items-center">
+            <div class="w-full flex items-center justify-between mb-4">
+              <button
+                type="button"
+                onclick="showStep(1)"
+                class="flex items-center gap-1.5 text-xs font-semibold text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 cursor-pointer py-1 px-3 rounded-full hover:bg-gray-100 dark:hover:bg-slate-800"
+              >
+                ← Kembali
+              </button>
+              <span class="text-[11px] font-bold px-3 py-1 bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 rounded-full border border-rose-100 dark:border-rose-900/50">
+                Langkah 2 dari 3
+              </span>
+            </div>
+
+            <div class="text-center mb-6 sm:mb-8">
+              <h2 class="font-serif text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100 mb-2">
+                Pilih Dresscode ✨
+              </h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 max-w-sm mx-auto">
+                Mau vibe yang gimana nih buat nanti malam?
+              </p>
+            </div>
+
+            <!-- Grid Options -->
+            <div class="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mb-5">
+              <!-- LOCKED: Dinner Mewah -->
+              <div
+                id="card-mewah"
+                onclick="handleLockedDinner()"
+                class="border-2 border-gray-100 dark:border-slate-800 rounded-3xl p-6 opacity-40 cursor-not-allowed flex flex-col items-center group bg-gray-50/40 dark:bg-slate-800/30 select-none transition-all"
+              >
+                <div class="text-4xl mb-3 grayscale">💎</div>
+                <div class="font-bold text-lg text-gray-400 dark:text-gray-500">Dinner Mewah</div>
+                <div class="text-gray-400 dark:text-gray-500 text-xs sm:text-sm mt-1.5">🔒 Feature Locked</div>
+                <div class="mt-4 text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Saldo Belum Cukup</div>
+              </div>
+
+              <!-- AVAILABLE: Dinner Santai -->
+              <div
+                id="card-santai"
+                onclick="handleChooseMurah()"
+                class="border-2 border-rose-200 dark:border-rose-900/60 bg-rose-50/70 dark:bg-rose-950/30 rounded-3xl p-6 cursor-pointer hover:border-rose-400 dark:hover:border-rose-700 transition-all flex flex-col items-center shadow-lg shadow-rose-200/40 dark:shadow-none hover:scale-105"
+              >
+                <div class="text-4xl mb-3">🍜</div>
+                <div class="font-bold text-lg text-rose-900 dark:text-rose-200">Dinner Santai ✨</div>
+                <div class="text-rose-600 dark:text-rose-400 text-xs sm:text-sm mt-1.5 font-medium">⭐ Available Now</div>
+                <div class="mt-4 text-[10px] text-rose-500 uppercase tracking-wider font-bold bg-white/80 dark:bg-slate-900/80 px-3 py-1 rounded-full border border-rose-200 dark:border-rose-800">
+                  Klik untuk pilih →
+                </div>
+              </div>
+            </div>
+
+            <!-- Locked Toast Message -->
+            <div id="locked-alert" class="hidden w-full bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-900/50 text-rose-900 dark:text-rose-200 rounded-2xl p-4 text-xs sm:text-sm flex items-start gap-2.5 shadow-sm text-left">
+              <span class="text-rose-500 text-base">⚠️</span>
+              <div class="flex-1">
+                <p class="font-bold text-rose-800 dark:text-rose-200 mb-0.5">Fitur Dinner Mewah Terkunci 🔒</p>
+                <p class="text-rose-600 dark:text-rose-300 text-xs leading-relaxed">
+                  Pilih <span class="font-bold underline">"Dinner Santai"</span> aja ya! Dijamin lebih hangat, kenyang, dan nyaman tanpa ribet. ✨
+                </p>
+              </div>
+              <button type="button" onclick="closeLockedAlert()" class="text-rose-400 hover:text-rose-700 text-xs font-bold px-1 cursor-pointer">✕</button>
+            </div>
+          </div>
+
+          <!-- STEP 3: DETAILS & INVITATION CARD -->
+          <div id="step-3" class="hidden flex flex-col items-center">
+            <div class="text-5xl sm:text-6xl mb-3 select-none">💌</div>
+            <h2 class="font-serif text-3xl sm:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-1">
+              It's a Date! ✨
+            </h2>
+            <p id="invitation-for" class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-6">
+              Undangan resmi kencan malam ini
+            </p>
+
+            <!-- Cards Details -->
+            <div class="w-full space-y-3.5 mb-5 text-left">
+              <!-- Lokasi -->
+              <div class="bg-rose-50/80 dark:bg-rose-950/40 p-5 rounded-2xl border border-rose-100 dark:border-rose-900/40">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] uppercase tracking-widest text-rose-500 dark:text-rose-400 font-bold">
+                    📍 LOKASI PERTEMUAN
+                  </span>
+                  <button type="button" onclick="openEditModal()" class="text-[11px] font-bold text-rose-500 hover:text-rose-700 cursor-pointer">
+                    ✏️ Edit
+                  </button>
+                </div>
+                <div id="detail-location" class="text-gray-800 dark:text-gray-100 font-bold text-base sm:text-lg mt-1">
+                  Kedai Angkringan / Street Food Center
+                </div>
+                <div id="detail-address" class="text-gray-500 dark:text-gray-400 text-xs mt-0.5">
+                  Dekat perempatan pusat kota
+                </div>
+              </div>
+
+              <!-- Waktu -->
+              <div class="bg-rose-50/80 dark:bg-rose-950/40 p-5 rounded-2xl border border-rose-100 dark:border-rose-900/40">
+                <div class="text-[10px] uppercase tracking-widest text-rose-500 dark:text-rose-400 font-bold">
+                  ⏰ WAKTU KEBERANGKATAN
+                </div>
+                <div id="detail-time" class="text-gray-800 dark:text-gray-100 font-bold text-base sm:text-lg mt-1">
+                  19:30 WIB Malam Ini
+                </div>
+                <div class="text-gray-500 dark:text-gray-400 text-xs mt-0.5">
+                  Siap-siap ya, jangan telat!
+                </div>
+              </div>
+
+              <!-- Dresscode & Transport -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div class="bg-rose-50/80 dark:bg-rose-950/40 p-4 rounded-2xl border border-rose-100 dark:border-rose-900/40">
+                  <div class="text-[10px] uppercase tracking-widest text-rose-500 dark:text-rose-400 font-bold mb-1">
+                    👗 DRESSCODE
+                  </div>
+                  <div id="detail-dresscode" class="text-gray-800 dark:text-gray-100 font-semibold text-xs sm:text-sm">
+                    Casual & Santai
+                  </div>
+                </div>
+
+                <div class="bg-rose-50/80 dark:bg-rose-950/40 p-4 rounded-2xl border border-rose-100 dark:border-rose-900/40">
+                  <div class="text-[10px] uppercase tracking-widest text-rose-500 dark:text-rose-400 font-bold mb-1">
+                    🛵 TRANSPORTASI
+                  </div>
+                  <div id="detail-transport" class="text-gray-800 dark:text-gray-100 font-semibold text-xs sm:text-sm">
+                    Motoran bareng
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p id="detail-notes" class="text-rose-500 dark:text-rose-400 font-medium italic text-xs sm:text-sm mb-6">
+              "Ditunggu ya, see you soon! ✨"
+            </p>
+
+            <!-- Actions buttons -->
+            <div class="w-full flex flex-col sm:flex-row items-center justify-center gap-3">
+              <button
+                type="button"
+                onclick="shareWhatsApp()"
+                class="w-full sm:flex-1 py-3 px-5 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-full shadow-lg shadow-rose-200 dark:shadow-none flex items-center justify-center gap-2 cursor-pointer transition-all text-sm"
+              >
+                💬 Kirim ke WhatsApp
+              </button>
+
+              <button
+                id="btn-copy"
+                type="button"
+                onclick="copyInvitation()"
+                class="w-full sm:w-auto py-3 px-5 bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-200 font-semibold rounded-full border border-gray-200 dark:border-slate-700 flex items-center justify-center gap-1.5 cursor-pointer text-sm whitespace-nowrap transition-all"
+              >
+                📋 Salin Undangan
+              </button>
+
+              <button
+                type="button"
+                onclick="resetAll()"
+                class="py-3 px-4 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-xs font-semibold rounded-full hover:bg-gray-100 dark:hover:bg-slate-800 flex items-center justify-center gap-1 cursor-pointer transition-colors"
+                title="Ulangi"
+              >
+                🔄 Ulang
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="text-center text-[11px] sm:text-xs text-gray-500 dark:text-gray-400 py-2 sm:py-3">
+        <p class="font-medium">
+          Undangan kencan malam ini • Hosted on dh.github.io ✨
+        </p>
+      </footer>
+
+    </div>
+
+    <!-- MODAL EDIT DETAILS -->
+    <div id="edit-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-xs overflow-y-auto">
+      <div class="bg-white dark:bg-slate-900 border border-rose-100 dark:border-slate-800 rounded-[32px] w-full max-w-lg shadow-2xl p-6 sm:p-8 my-auto text-left">
+        <div class="flex items-center justify-between border-b border-gray-100 dark:border-slate-800 pb-3.5 mb-4">
+          <h3 class="font-serif text-lg font-bold text-gray-800 dark:text-gray-100">
+            Sesuaikan Detail Undangan ✨
+          </h3>
+          <button type="button" onclick="closeEditModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-1.5 rounded-full">✕</button>
+        </div>
+
+        <form onsubmit="saveEditDetails(event)" class="space-y-3 text-xs sm:text-sm">
+          <div>
+            <label class="block font-semibold text-gray-700 dark:text-gray-300 mb-1 text-xs">Nama Pasangan / Gebetan:</label>
+            <input id="edit-name" type="text" placeholder="Contoh: Putri / Cantik" class="w-full px-3.5 py-2 bg-rose-50/40 dark:bg-slate-800 border border-rose-100 dark:border-slate-700 rounded-xl focus:outline-none" />
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 dark:text-gray-300 mb-1 text-xs">Waktu & Jam:</label>
+            <input id="edit-time" type="text" placeholder="19:30 WIB Malam Ini" class="w-full px-3.5 py-2 bg-rose-50/40 dark:bg-slate-800 border border-rose-100 dark:border-slate-700 rounded-xl focus:outline-none" />
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 dark:text-gray-300 mb-1 text-xs">Nama Tempat / Lokasi:</label>
+            <input id="edit-location" type="text" placeholder="Kedai Street Food Favorit" class="w-full px-3.5 py-2 bg-rose-50/40 dark:bg-slate-800 border border-rose-100 dark:border-slate-700 rounded-xl focus:outline-none" />
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 dark:text-gray-300 mb-1 text-xs">Detail Alamat:</label>
+            <input id="edit-address" type="text" placeholder="Dekat perempatan pusat kota" class="w-full px-3.5 py-2 bg-rose-50/40 dark:bg-slate-800 border border-rose-100 dark:border-slate-700 rounded-xl focus:outline-none" />
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 dark:text-gray-300 mb-1 text-xs">Dresscode:</label>
+            <input id="edit-dresscode" type="text" placeholder="Casual santai & wangi" class="w-full px-3.5 py-2 bg-rose-50/40 dark:bg-slate-800 border border-rose-100 dark:border-slate-700 rounded-xl focus:outline-none" />
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 dark:text-gray-300 mb-1 text-xs">Transportasi:</label>
+            <input id="edit-transport" type="text" placeholder="Motoran santai bareng 🛵" class="w-full px-3.5 py-2 bg-rose-50/40 dark:bg-slate-800 border border-rose-100 dark:border-slate-700 rounded-xl focus:outline-none" />
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 dark:text-gray-300 mb-1 text-xs">Nomor WhatsApp (Awalan 62):</label>
+            <input id="edit-phone" type="text" placeholder="6281234567890" class="w-full px-3.5 py-2 bg-rose-50/40 dark:bg-slate-800 border border-rose-100 dark:border-slate-700 rounded-xl focus:outline-none" />
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 dark:text-gray-300 mb-1 text-xs">Catatan / Notes:</label>
+            <input id="edit-notes" type="text" placeholder="Siapin perut kosong ya!" class="w-full px-3.5 py-2 bg-rose-50/40 dark:bg-slate-800 border border-rose-100 dark:border-slate-700 rounded-xl focus:outline-none" />
+          </div>
+
+          <div class="flex items-center justify-end gap-2 pt-3 border-t border-gray-100 dark:border-slate-800">
+            <button type="button" onclick="closeEditModal()" class="px-4 py-2 text-xs font-semibold text-gray-500 rounded-full cursor-pointer">Batal</button>
+            <button type="submit" class="px-5 py-2 text-xs font-bold text-white bg-rose-500 hover:bg-rose-600 rounded-full shadow-md cursor-pointer">Simpan Detail</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- MODAL GANTI BACKGROUND FOTO -->
+    <div id="bg-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/60 backdrop-blur-xs overflow-y-auto">
+      <div class="bg-white dark:bg-slate-900 border border-rose-100 dark:border-slate-800 rounded-[28px] sm:rounded-[36px] w-full max-w-lg shadow-2xl p-5 sm:p-7 my-auto text-left relative">
+        <div class="flex items-center justify-between border-b border-gray-100 dark:border-slate-800 pb-3 mb-4">
+          <div>
+            <h3 class="font-serif text-base sm:text-lg font-bold text-gray-800 dark:text-gray-100">
+              Gonta-Ganti Foto Background 📸
+            </h3>
+            <p class="text-xs text-gray-400 dark:text-gray-500">Pilih foto suasana, slideshow otomatis, atau foto sendiri</p>
+          </div>
+          <button type="button" onclick="closeBgModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-1.5 rounded-full cursor-pointer">✕</button>
+        </div>
+
+        <!-- Quick actions -->
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4 p-3 bg-rose-50/70 dark:bg-rose-950/30 border border-rose-100 dark:border-rose-900/40 rounded-2xl">
+          <button
+            id="btn-auto-slide"
+            type="button"
+            onclick="toggleAutoSlide()"
+            class="px-3 py-1.5 rounded-full text-xs font-bold bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-slate-700 cursor-pointer"
+          >
+            ▶ Putar Slideshow Otomatis
+          </button>
+          <button
+            type="button"
+            onclick="randomBackground()"
+            class="px-3 py-1.5 bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 rounded-full border border-gray-200 dark:border-slate-700 text-xs font-semibold hover:text-rose-500 cursor-pointer"
+          >
+            🔀 Acak Foto
+          </button>
+        </div>
+
+        <!-- Background grid -->
+        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2">Pilihan Foto Background:</label>
+        <div id="bg-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 max-h-52 overflow-y-auto p-1 mb-4">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Upload & Folder Form -->
+        <div class="space-y-2.5 pt-2 border-t border-gray-100 dark:border-slate-800 text-xs">
+          <div>
+            <input type="file" id="file-upload" accept="image/*" onchange="handleCustomUpload(event)" class="hidden" />
+            <button
+              type="button"
+              onclick="document.getElementById('file-upload').click()"
+              class="w-full flex items-center justify-center gap-1.5 py-2 px-3 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-xl cursor-pointer"
+            >
+              📤 Upload Foto dari Galeri HP / Komputer
+            </button>
+          </div>
+
+          <form onsubmit="handleCustomLocalPath(event)" class="flex items-center gap-1.5">
+            <input
+              id="input-local-path"
+              type="text"
+              placeholder="Nama file di /backgrounds/ (misal: foto.jpg)"
+              class="w-full px-3 py-1.5 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl text-xs focus:outline-none"
+            />
+            <button type="submit" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 text-gray-700 dark:text-gray-200 font-bold rounded-xl text-xs cursor-pointer whitespace-nowrap">
+              Pakai
+            </button>
+          </form>
+
+          <p class="text-[11px] text-gray-400 dark:text-gray-500 leading-tight">
+            💡 <strong>Info Folder:</strong> Kamu bisa menaruh foto kamu langsung di folder <code class="bg-gray-100 dark:bg-slate-800 px-1 py-0.5 rounded text-rose-500">backgrounds/</code> di repo kamu.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Script Entrypoint -->
+    <script src="./script.js"></script>
+  </body>
+</html>
