@@ -112,6 +112,66 @@ const details = {
   specialNotes: 'Siapin senyuman terindah dan perut kosong yaa sayang! 😊💖'
 };
 
+// Music Player Logic (The 1975 - Love It If We Made It)
+let isMusicPlaying = false;
+
+function tryPlayMusic() {
+  const music = document.getElementById('bg-music');
+  if (music && !isMusicPlaying) {
+    music.volume = 0.55;
+    const playPromise = music.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          isMusicPlaying = true;
+          updateMusicUI(true);
+        })
+        .catch(() => {
+          // Browser prevented autoplay without interaction, wait for first click/tap
+          isMusicPlaying = false;
+          updateMusicUI(false);
+        });
+    }
+  }
+}
+
+function toggleMusic() {
+  const music = document.getElementById('bg-music');
+  if (!music) return;
+  if (isMusicPlaying) {
+    music.pause();
+    isMusicPlaying = false;
+    updateMusicUI(false);
+  } else {
+    music.volume = 0.55;
+    music.play().then(() => {
+      isMusicPlaying = true;
+      updateMusicUI(true);
+    }).catch(e => console.log('Audio play error:', e));
+  }
+}
+
+function updateMusicUI(playing) {
+  const icon = document.getElementById('music-icon');
+  const label = document.getElementById('music-label');
+  const btn = document.getElementById('btn-music-toggle');
+  if (playing) {
+    if (icon) {
+      icon.innerText = '🔊';
+      icon.classList.add('animate-bounce');
+    }
+    if (label) label.innerText = 'The 1975 🎶';
+    if (btn) btn.classList.add('text-rose-500');
+  } else {
+    if (icon) {
+      icon.innerText = '🔇';
+      icon.classList.remove('animate-bounce');
+    }
+    if (label) label.innerText = 'Putar Musik';
+    if (btn) btn.classList.remove('text-rose-500');
+  }
+}
+
 // Check query param for custom name
 window.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
@@ -128,6 +188,18 @@ window.addEventListener('DOMContentLoaded', () => {
   // Set default background to first photo
   setBackground(BACKGROUNDS[0].url);
   startAutoSlide();
+
+  // Attempt autoplay immediately
+  tryPlayMusic();
+
+  // Also trigger autoplay seamlessly on user's first touch / click anywhere on the page
+  const startMusicOnFirstInteraction = () => {
+    tryPlayMusic();
+    document.removeEventListener('click', startMusicOnFirstInteraction);
+    document.removeEventListener('touchstart', startMusicOnFirstInteraction);
+  };
+  document.addEventListener('click', startMusicOnFirstInteraction, { once: true });
+  document.addEventListener('touchstart', startMusicOnFirstInteraction, { once: true });
 });
 
 // Stepper
