@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Undangan Date Malem Ini Buat Pacarku 💌 • Syarifa Alisa Putri</title>
-    <meta name="description" content="Website ajakan kencan malam ini khusus untuk Syarifa Alisa Putri." />
+    <title>Undangan Date Malem Ini Buat Pacarku, 💌 • Syarifa Alisa Putri.</title>
+    <meta name="description" content="Website ajakan kencan malam ini khusus untuk Syarifa Alisa Putri yang hobi banget cemberut." />
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,10 +35,11 @@
   </head>
   <body class="min-h-[100dvh] w-full bg-[#FFF5F7] text-gray-800 dark:bg-[#120e14] dark:text-slate-100 transition-colors duration-300 relative flex flex-col justify-between overflow-x-hidden antialiased">
 
-    <!-- Background Layer with Transition -->
+    <!-- Background Layer with High Visibility -->
     <div id="bg-layer" class="fixed inset-0 overflow-hidden pointer-events-none z-0">
-      <img id="bg-image" src="./backgrounds/bg1.JPEG" alt="Background" class="w-full h-full object-cover object-center absolute inset-0 opacity-100 transition-opacity duration-1000" />
-      <div class="absolute inset-0 bg-gradient-to-b from-rose-950/30 via-white/80 to-white/95 dark:from-slate-950/80 dark:via-slate-950/85 dark:to-slate-950/95 backdrop-blur-[2px] transition-colors duration-500"></div>
+      <img id="bg-image" src="./backgrounds/bg1.JPEG" alt="Background" class="w-full h-full object-cover object-center absolute inset-0 opacity-100 transition-all duration-700 filter brightness-95" />
+      <!-- Subtle ambient tint so photo stays very crisp and vibrant -->
+      <div id="bg-tint" class="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/40 transition-all duration-500"></div>
     </div>
 
     <!-- Main Container -->
@@ -50,14 +51,14 @@
           <div class="w-8 h-8 sm:w-9 sm:h-9 bg-rose-500 text-white rounded-full flex items-center justify-center shadow-md shadow-rose-200 dark:shadow-none shrink-0">
             💖
           </div>
-          <span class="font-serif font-bold text-sm sm:text-lg tracking-tight text-gray-800 dark:text-gray-100">
-            Date<span class="text-rose-500">Night</span>
+          <span class="font-serif font-bold text-sm sm:text-lg tracking-tight text-white drop-shadow-md">
+            Date<span class="text-rose-400">Night</span>
           </span>
         </div>
 
         <div class="flex items-center gap-1.5 sm:gap-2">
           <!-- Music Player Floating Widget & Toggle -->
-          <div class="flex items-center gap-1 bg-white/90 dark:bg-slate-800/90 border border-rose-100 dark:border-slate-700 rounded-full px-2.5 py-1 text-xs shadow-xs">
+          <div class="flex items-center gap-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-rose-200/60 dark:border-slate-700/80 rounded-full px-2.5 py-1 text-xs shadow-md">
             <button
               id="btn-music-toggle"
               type="button"
@@ -66,7 +67,7 @@
               title="Putar / Pause Lagu The 1975"
             >
               <span id="music-icon" class="animate-pulse">🎵</span>
-              <span id="music-label" class="hidden xs:inline sm:inline text-[11px] text-gray-700 dark:text-gray-200">The 1975 🎶</span>
+              <span id="music-label" class="hidden xs:inline sm:inline text-[11px] text-gray-700 dark:text-gray-200">The 1975</span>
             </button>
           </div>
 
@@ -74,16 +75,27 @@
           <button
             type="button"
             onclick="openBgModal()"
-            class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 dark:bg-slate-800/90 border border-rose-100 dark:border-slate-700 text-gray-700 dark:text-gray-200 hover:text-rose-600 text-xs font-semibold shadow-xs cursor-pointer transition-all"
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-rose-200/60 dark:border-slate-700/80 text-gray-700 dark:text-gray-200 hover:text-rose-600 text-xs font-semibold shadow-md cursor-pointer transition-all"
           >
-            📸 <span class="hidden xs:inline sm:inline">Foto Background</span>
+            📸 <span class="hidden xs:inline sm:inline">Foto</span>
+          </button>
+
+          <!-- Toggle Glass Transparency / Foto Visibility -->
+          <button
+            id="btn-glass-toggle"
+            type="button"
+            onclick="toggleCardTransparency()"
+            class="px-2.5 py-1.5 rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-rose-200/60 dark:border-slate-700/80 text-gray-700 dark:text-gray-200 hover:text-rose-600 text-xs font-semibold shadow-md cursor-pointer transition-all flex items-center gap-1"
+            title="Klik untuk melihat foto lebih jelas (Transparansi Kartu)"
+          >
+            👁️ <span class="hidden sm:inline text-[11px]" id="glass-label">Kaca Bersih</span>
           </button>
 
           <!-- Dark mode toggle -->
           <button
             type="button"
             onclick="toggleDarkMode()"
-            class="p-2 sm:p-2.5 rounded-full bg-white/90 dark:bg-slate-800/90 border border-rose-100 dark:border-slate-700 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white shadow-xs cursor-pointer"
+            class="p-2 sm:p-2.5 rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-rose-200/60 dark:border-slate-700/80 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white shadow-md cursor-pointer"
             title="Toggle Dark Mode"
           >
             🌓
@@ -91,9 +103,9 @@
         </div>
       </header>
 
-      <!-- Main Content Card Container -->
+      <!-- Main Content Card Container with Ultra-Clear Glass Styling -->
       <main class="flex-1 flex items-center justify-center py-2 sm:py-4">
-        <div class="w-full max-w-xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-[28px] sm:rounded-[44px] p-6 sm:p-10 shadow-2xl shadow-rose-950/10 dark:shadow-black/50 border border-rose-100/60 dark:border-slate-800/80 transition-all text-center">
+        <div id="main-card" class="w-full max-w-xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-[28px] sm:rounded-[44px] p-6 sm:p-10 shadow-2xl shadow-black/20 border border-white/60 dark:border-white/10 transition-all duration-300 text-center">
 
           <!-- STEP 1: QUESTION -->
           <div id="step-1" class="flex flex-col items-center">
@@ -105,10 +117,10 @@
             </div>
 
             <h1 id="question-heading" class="font-serif text-xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100 leading-snug mb-2 sm:mb-3">
-              Syarifa Alisa Putri, Sayangku, Cintaku, malem ini mau keluar sama aku gak?
+              Syarifa Alisa Putri, Sayangku, Cintaku, Kasihku, Cantikku.. malem ini mau keluar sama aku gak?
             </h1>
-            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 max-w-sm mx-auto mb-6 sm:mb-8">
-              Jalan-jalan santai, kulineran, dan ngobrol seru bareng menikmati malam ini! ✨
+            <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 max-w-sm mx-auto mb-6 sm:mb-8 font-medium">
+              Sumpah inimah gabakal cemberut, pasti happy! ✨
             </p>
 
             <!-- Buttons Area -->
@@ -128,14 +140,14 @@
                 id="btn-no"
                 type="button"
                 onclick="handleReject()"
-                class="bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full font-bold transition-all shadow-xs cursor-pointer whitespace-nowrap text-xs sm:text-sm"
+                class="bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full font-bold transition-all shadow-xs cursor-pointer whitespace-nowrap text-xs sm:text-sm border border-gray-200/50"
               >
-                Enggak ah
+                Enggak ah mau di kos aja
               </button>
             </div>
 
-            <div id="reject-hint" class="hidden mt-4 sm:mt-6 flex items-center gap-1.5 text-[11px] sm:text-xs text-rose-500 bg-rose-50 dark:bg-rose-950/40 px-3.5 sm:px-4 py-1.5 rounded-full border border-rose-100 dark:border-rose-900/40">
-              <span>⚠️ Petunjuk: Semakin kamu tolak, tombol Iya makin besar! 😆</span>
+            <div id="reject-hint" class="hidden mt-4 sm:mt-6 flex items-center gap-1.5 text-[11px] sm:text-xs text-rose-500 bg-rose-50/90 dark:bg-rose-950/60 px-3.5 sm:px-4 py-1.5 rounded-full border border-rose-200 dark:border-rose-900/40">
+              <span>⚠️ Petunjuk: Aku otoriter, kamu gabisa nolak! 😆</span>
             </div>
           </div>
 
@@ -145,11 +157,11 @@
               <button
                 type="button"
                 onclick="showStep(1)"
-                class="flex items-center gap-1.5 text-xs font-semibold text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 cursor-pointer py-1 px-3 rounded-full hover:bg-gray-100 dark:hover:bg-slate-800"
+                class="flex items-center gap-1.5 text-xs font-semibold text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 cursor-pointer py-1 px-3 rounded-full hover:bg-white/50 dark:hover:bg-slate-800"
               >
                 ← Kembali
               </button>
-              <span class="text-[11px] font-bold px-3 py-1 bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 rounded-full border border-rose-100 dark:border-rose-900/50">
+              <span class="text-[11px] font-bold px-3 py-1 bg-rose-50/90 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 rounded-full border border-rose-100 dark:border-rose-900/50">
                 Langkah 2 dari 3
               </span>
             </div>
@@ -158,7 +170,7 @@
               <h2 class="font-serif text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100 mb-2">
                 Pilih Konsep Dinner ✨
               </h2>
-              <p class="text-sm text-gray-500 dark:text-gray-400 max-w-sm mx-auto">
+              <p class="text-sm text-gray-600 dark:text-gray-300 max-w-sm mx-auto font-medium">
                 Mau vibe yang gimana nih buat nanti malam?
               </p>
             </div>
@@ -169,11 +181,11 @@
               <div
                 id="card-mewah"
                 onclick="handleLockedDinner()"
-                class="border-2 border-gray-100 dark:border-slate-800 rounded-3xl p-6 opacity-40 cursor-not-allowed flex flex-col items-center group bg-gray-50/40 dark:bg-slate-800/30 select-none transition-all"
+                class="border-2 border-gray-200/60 dark:border-slate-800 rounded-3xl p-6 opacity-40 cursor-not-allowed flex flex-col items-center group bg-white/40 dark:bg-slate-800/30 select-none transition-all"
               >
                 <div class="text-4xl mb-3 grayscale">💎</div>
-                <div class="font-bold text-lg text-gray-400 dark:text-gray-500">Dinner Mewah</div>
-                <div class="text-gray-400 dark:text-gray-500 text-xs sm:text-sm mt-1.5">🔒 Feature Locked</div>
+                <div class="font-bold text-lg text-gray-500 dark:text-gray-400">Dinner Mewah</div>
+                <div class="text-gray-500 dark:text-gray-400 text-xs sm:text-sm mt-1.5">🔒 Feature Locked</div>
                 <div class="mt-4 text-[10px] text-gray-400 uppercase tracking-wider font-semibold">belum ada duitnya neng</div>
               </div>
 
@@ -181,24 +193,24 @@
               <div
                 id="card-santai"
                 onclick="handleChooseMurah()"
-                class="border-2 border-rose-200 dark:border-rose-900/60 bg-rose-50/70 dark:bg-rose-950/30 rounded-3xl p-6 cursor-pointer hover:border-rose-400 dark:hover:border-rose-700 transition-all flex flex-col items-center shadow-lg shadow-rose-200/40 dark:shadow-none hover:scale-105"
+                class="border-2 border-rose-300 dark:border-rose-800 bg-rose-50/90 dark:bg-rose-950/50 rounded-3xl p-6 cursor-pointer hover:border-rose-500 transition-all flex flex-col items-center shadow-lg hover:scale-105"
               >
                 <div class="text-4xl mb-3">🍜</div>
-                <div class="font-bold text-lg text-rose-900 dark:text-rose-200">Dinner Santai ✨</div>
+                <div class="font-bold text-lg text-rose-950 dark:text-rose-200">Dinner Santai ✨</div>
                 <div class="text-rose-600 dark:text-rose-400 text-xs sm:text-sm mt-1.5 font-medium">⭐ Available Now</div>
-                <div class="mt-4 text-[10px] text-rose-500 uppercase tracking-wider font-bold bg-white/80 dark:bg-slate-900/80 px-3 py-1 rounded-full border border-rose-200 dark:border-rose-800">
+                <div class="mt-4 text-[10px] text-rose-600 uppercase tracking-wider font-bold bg-white/90 dark:bg-slate-900/90 px-3 py-1 rounded-full border border-rose-200 dark:border-rose-800">
                   Klik untuk pilih →
                 </div>
               </div>
             </div>
 
             <!-- Locked Toast Message -->
-            <div id="locked-alert" class="hidden w-full bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-900/50 text-rose-900 dark:text-rose-200 rounded-2xl p-4 text-xs sm:text-sm flex items-start gap-2.5 shadow-sm text-left">
+            <div id="locked-alert" class="hidden w-full bg-rose-50/95 dark:bg-rose-950/80 border border-rose-200 dark:border-rose-900/50 text-rose-900 dark:text-rose-200 rounded-2xl p-4 text-xs sm:text-sm flex items-start gap-2.5 shadow-md text-left">
               <span class="text-rose-500 text-base">⚠️</span>
               <div class="flex-1">
                 <p class="font-bold text-rose-800 dark:text-rose-200 mb-0.5">Fitur Dinner Mewah Terkunci 🔒</p>
                 <p class="text-rose-600 dark:text-rose-300 text-xs leading-relaxed">
-                  Belum ada duitnya neng! Pilih <span class="font-bold underline">"Dinner Santai"</span> aja ya, dijamin lebih seru, kenyang, dan bahagia bareng! ✨
+                  Belum ada duitnya neng! Pilih <span class="font-bold underline">"Dinner Santai"</span> dijamin lebih seru, kenyang, dan bahagia bareng, ramah dompet ✨
                 </p>
               </div>
               <button type="button" onclick="closeLockedAlert()" class="text-rose-400 hover:text-rose-700 text-xs font-bold px-1 cursor-pointer">✕</button>
@@ -211,14 +223,14 @@
             <h2 class="font-serif text-3xl sm:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-1">
               It's a Date! ✨
             </h2>
-            <p id="invitation-for" class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-6">
-              Undangan resmi untuk Syarifa Alisa Putri 💖
+            <p id="invitation-for" class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mb-6 font-medium">
+              Undangan resmi untuk Pacarku 💖
             </p>
 
             <!-- Cards Details -->
             <div class="w-full space-y-3.5 mb-5 text-left">
               <!-- Lokasi Penjemputan -->
-              <div class="bg-rose-50/80 dark:bg-rose-950/40 p-5 rounded-2xl border border-rose-100 dark:border-rose-900/40">
+              <div class="bg-white/80 dark:bg-rose-950/40 p-5 rounded-2xl border border-rose-100 dark:border-rose-900/40 shadow-xs">
                 <div class="flex items-center justify-between">
                   <span class="text-[10px] uppercase tracking-widest text-rose-500 dark:text-rose-400 font-bold">
                     📍 LOKASI PENJEMPUTAN
@@ -236,7 +248,7 @@
               </div>
 
               <!-- Waktu -->
-              <div class="bg-rose-50/80 dark:bg-rose-950/40 p-5 rounded-2xl border border-rose-100 dark:border-rose-900/40">
+              <div class="bg-white/80 dark:bg-rose-950/40 p-5 rounded-2xl border border-rose-100 dark:border-rose-900/40 shadow-xs">
                 <div class="text-[10px] uppercase tracking-widest text-rose-500 dark:text-rose-400 font-bold">
                   ⏰ WAKTU KEBERANGKATAN
                 </div>
@@ -244,13 +256,13 @@
                   Malam ini pukul 18.30 (dijemput di depan gerbang biru)
                 </div>
                 <div class="text-gray-500 dark:text-gray-400 text-xs mt-0.5">
-                  Siap-siap yaa, jangan cemberut! 😊
+                  Gak perlu dandan, kamu udah cantik dari lahir! 😊
                 </div>
               </div>
 
               <!-- Dresscode & Transport -->
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                <div class="bg-rose-50/80 dark:bg-rose-950/40 p-4 rounded-2xl border border-rose-100 dark:border-rose-900/40">
+                <div class="bg-white/80 dark:bg-rose-950/40 p-4 rounded-2xl border border-rose-100 dark:border-rose-900/40 shadow-xs">
                   <div class="text-[10px] uppercase tracking-widest text-rose-500 dark:text-rose-400 font-bold mb-1">
                     👗 DRESSCODE
                   </div>
@@ -259,7 +271,7 @@
                   </div>
                 </div>
 
-                <div class="bg-rose-50/80 dark:bg-rose-950/40 p-4 rounded-2xl border border-rose-100 dark:border-rose-900/40">
+                <div class="bg-white/80 dark:bg-rose-950/40 p-4 rounded-2xl border border-rose-100 dark:border-rose-900/40 shadow-xs">
                   <div class="text-[10px] uppercase tracking-widest text-rose-500 dark:text-rose-400 font-bold mb-1">
                     🛵 TRANSPORTASI
                   </div>
@@ -270,8 +282,8 @@
               </div>
             </div>
 
-            <p id="detail-notes" class="text-rose-500 dark:text-rose-400 font-medium italic text-xs sm:text-sm mb-6">
-              "Siapin senyuman terindah dan perut kosong yaa sayang! 😊💖"
+            <p id="detail-notes" class="text-rose-600 dark:text-rose-400 font-medium italic text-xs sm:text-sm mb-6">
+              "Jangan crop top an dut, dingin. 😊💖"
             </p>
 
             <!-- Actions buttons -->
@@ -288,7 +300,7 @@
                 id="btn-copy"
                 type="button"
                 onclick="copyInvitation()"
-                class="w-full sm:w-auto py-3 px-5 bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-200 font-semibold rounded-full border border-gray-200 dark:border-slate-700 flex items-center justify-center gap-1.5 cursor-pointer text-sm whitespace-nowrap transition-all"
+                class="w-full sm:w-auto py-3 px-5 bg-white/90 dark:bg-slate-800 hover:bg-white text-gray-700 dark:text-gray-200 font-semibold rounded-full border border-gray-200 dark:border-slate-700 flex items-center justify-center gap-1.5 cursor-pointer text-sm whitespace-nowrap transition-all"
               >
                 📋 Salin Undangan
               </button>
@@ -296,7 +308,7 @@
               <button
                 type="button"
                 onclick="resetAll()"
-                class="py-3 px-4 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-xs font-semibold rounded-full hover:bg-gray-100 dark:hover:bg-slate-800 flex items-center justify-center gap-1 cursor-pointer transition-colors"
+                class="py-3 px-4 text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 text-xs font-semibold rounded-full hover:bg-white/50 flex items-center justify-center gap-1 cursor-pointer transition-colors"
                 title="Ulangi"
               >
                 🔄 Ulang
@@ -308,9 +320,9 @@
       </main>
 
       <!-- Footer -->
-      <footer class="text-center text-[11px] sm:text-xs text-gray-500 dark:text-gray-400 py-2 sm:py-3">
+      <footer class="text-center text-[11px] sm:text-xs text-white/90 drop-shadow-md py-2 sm:py-3">
         <p class="font-medium">
-          Undangan kencan malam ini khusus Syarifa Alisa Putri • dh.github.io 💖
+          Undangan kencan malam ini buat pacarku Syarifa Alisa Putri • dh.github.io 💖
         </p>
       </footer>
 
