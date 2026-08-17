@@ -310,19 +310,9 @@ Sampai ketemu malem ini ya! ❤️✨`;
 
 // Share WhatsApp
 function shareWhatsApp() {
-  const summary = `🎉 *UNDANGAN KENCAN MALAM INI* 🎉
-Hai ${details.partnerName}! Undangan kencan kita udah siap:
-
-📅 *Waktu:* ${details.dateTime}
-📍 *Lokasi Penjemputan:* ${details.locationName} (${details.locationAddress})
-👗 *Dresscode:* ${details.dresscode}
-🛵 *Transportasi:* ${details.transportation}
-💌 *Notes:* ${details.specialNotes}
-
-Sampai ketemu malem ini ya sayang! ❤️✨`;
-
-  const phone = details.myPhone.replace(/[^0-9]/g, '');
-  const url = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(summary)}` : `https://wa.me/?text=${encodeURIComponent(summary)}`;
+  const confirmationMessage = `Iyaa sayangg, aku terima ya tawarannya, love you more 💖✨`;
+  const phone = '6285890999711';
+  const url = `https://wa.me/${phone}?text=${encodeURIComponent(confirmationMessage)}`;
   window.open(url, '_blank');
 }
 
