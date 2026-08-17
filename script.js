@@ -76,8 +76,10 @@ const BACKGROUNDS = [
   { id: 'cozy-cafe', name: 'Cozy Cafe', url: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80' },
   { id: 'sunset', name: 'Romantic Sunset', url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80' },
   { id: 'street-food', name: 'Street Food Vibe', url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=80' },
-  { id: 'folder-1', name: 'Folder /backgrounds/bg-1.jpg', url: './backgrounds/bg-1.jpg' },
-  { id: 'folder-2', name: 'Folder /backgrounds/bg-2.jpg', url: './backgrounds/bg-2.jpg' }
+  { id: 'folder-1', name: 'Folder /backgrounds/bg1.jpg', url: './backgrounds/bg1.jpg' },
+  { id: 'folder-2', name: 'Folder /backgrounds/bg2.jpg', url: './backgrounds/bg2.jpg' },
+  { id: 'folder-3', name: 'Folder /backgrounds/bg3.jpg', url: './backgrounds/bg3.jpg' },
+  { id: 'folder-4', name: 'Folder /backgrounds/bg4.jpg', url: './backgrounds/bg4.jpg' },
 ];
 
 let currentBgIndex = 0;
@@ -104,11 +106,11 @@ let noCount = 0;
 const details = {
   partnerName: '',
   myPhone: '',
-  locationName: 'Kedai Angkringan / Street Food Center',
-  locationAddress: 'Tempat jajan enak, ngemil & ngobrol santai',
-  dateTime: '19:30 WIB Malam Ini',
+  locationName: 'Kost Putri Indragiri',
+  locationAddress: 'Tempat jajan enak, ngemil & ngobrol santai, happy pokoknya',
+  dateTime: '18:30 WIB Malam Ini',
   dresscode: 'Casual & Santai (Kaos/Outer yang nyaman & wangi)',
-  transportation: 'Motoran santai nikmatin angin malam bareng 🛵💨',
+  transportation: 'Rebecca aja ya, mobil belum di ambil di dealer 🛵💨',
   specialNotes: 'Siapin perut kosong dan senyuman terbaik kamu ya! 😊💖'
 };
 
