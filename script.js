@@ -69,22 +69,20 @@ function playLockSound() {
   } catch (e) {}
 }
 
-// Background options
+// Background options with user's specific files: bg1.JPEG to bg4.JPEG
 const BACKGROUNDS = [
+  { id: 'user-bg1', name: 'Foto 1 (bg1.JPEG)', url: './backgrounds/bg1.JPEG' },
+  { id: 'user-bg2', name: 'Foto 2 (bg2.JPEG)', url: './backgrounds/bg2.JPEG' },
+  { id: 'user-bg3', name: 'Foto 3 (bg3.JPEG)', url: './backgrounds/bg3.JPEG' },
+  { id: 'user-bg4', name: 'Foto 4 (bg4.JPEG)', url: './backgrounds/bg4.JPEG' },
   { id: 'soft-pastel', name: 'Soft Pastel (Default)', url: '' },
   { id: 'night-city', name: 'City Night Lights', url: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1600&q=80' },
-  { id: 'cozy-cafe', name: 'Cozy Cafe', url: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80' },
-  { id: 'sunset', name: 'Romantic Sunset', url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80' },
-  { id: 'street-food', name: 'Street Food Vibe', url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=80' },
-  { id: 'folder-1', name: 'Folder /backgrounds/bg1.jpg', url: './backgrounds/bg1.jpg' },
-  { id: 'folder-2', name: 'Folder /backgrounds/bg2.jpg', url: './backgrounds/bg2.jpg' },
-  { id: 'folder-3', name: 'Folder /backgrounds/bg3.jpg', url: './backgrounds/bg3.jpg' },
-  { id: 'folder-4', name: 'Folder /backgrounds/bg4.jpg', url: './backgrounds/bg4.jpg' },
+  { id: 'cozy-cafe', name: 'Cozy Cafe', url: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80' }
 ];
 
 let currentBgIndex = 0;
 let autoSlideInterval = null;
-let isAutoSlide = false;
+let isAutoSlide = true; // Auto slideshow default on with Syarifa's photos
 
 // Rejection phrases
 const NO_PHRASES = [
@@ -102,28 +100,34 @@ const NO_PHRASES = [
 
 let noCount = 0;
 
-// State details
+// State details customized for Syarifa Alisa Putri
 const details = {
-  partnerName: '',
+  partnerName: 'Syarifa Alisa Putri',
   myPhone: '',
-  locationName: 'Kost Putri Indragiri',
-  locationAddress: 'Tempat jajan enak, ngemil & ngobrol santai, happy pokoknya',
-  dateTime: '18:30 WIB Malam Ini',
+  locationName: 'Rahasia 🤫✨',
+  locationAddress: 'pokoknyaa gabakal cemberut deh, promise 🤙💖',
+  dateTime: 'Malam ini pukul 18.30 (dijemput di depan gerbang biru)',
   dresscode: 'Casual & Santai (Kaos/Outer yang nyaman & wangi)',
-  transportation: 'Rebecca aja ya, mobil belum di ambil di dealer 🛵💨',
-  specialNotes: 'Siapin perut kosong dan senyuman terbaik kamu ya! 😊💖'
+  transportation: 'pake rebecca dulu lah ya, helikopter masih dipake prabowo 🛵💨',
+  specialNotes: 'Siapin senyuman terindah dan perut kosong yaa sayang! 😊💖'
 };
 
-// Check query param for custom name (?to=Putri or ?name=Putri)
+// Check query param for custom name
 window.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
   const name = params.get('to') || params.get('name') || params.get('n');
   if (name) {
     details.partnerName = name;
-    document.getElementById('question-heading').innerText = `Hai ${name}, malem ini mau keluar sama aku gak?`;
   }
+  
+  document.getElementById('question-heading').innerText = `Hai ${details.partnerName}, malem ini mau keluar sama aku gak?`;
+  
   updateDetailsUI();
   renderBackgroundGrid();
+  
+  // Set default background to first photo
+  setBackground(BACKGROUNDS[0].url);
+  startAutoSlide();
 });
 
 // Stepper
@@ -190,8 +194,8 @@ function handleChooseMurah() {
 function triggerConfetti() {
   if (typeof confetti === 'function') {
     confetti({
-      particleCount: 80,
-      spread: 70,
+      particleCount: 90,
+      spread: 75,
       origin: { y: 0.6 }
     });
   }
@@ -207,17 +211,17 @@ function updateDetailsUI() {
   document.getElementById('detail-notes').innerText = `"${details.specialNotes}"`;
   
   if (details.partnerName) {
-    document.getElementById('invitation-for').innerText = `Undangan resmi untuk ${details.partnerName}`;
+    document.getElementById('invitation-for').innerText = `Undangan resmi untuk ${details.partnerName} 💖`;
   }
 }
 
 // Copy Text
 function copyInvitation() {
   const summary = `🎉 *UNDANGAN KENCAN MALAM INI* 🎉
-Hai ${details.partnerName || 'kamu'}! Undangan kencan kita udah siap:
+Hai ${details.partnerName}! Undangan kencan kita udah siap:
 
 📅 *Waktu:* ${details.dateTime}
-📍 *Lokasi:* ${details.locationName} (${details.locationAddress})
+📍 *Lokasi Penjemputan:* ${details.locationName} (${details.locationAddress})
 👗 *Dresscode:* ${details.dresscode}
 🛵 *Transportasi:* ${details.transportation}
 💌 *Notes:* ${details.specialNotes}
@@ -236,15 +240,15 @@ Sampai ketemu malem ini ya! ❤️✨`;
 // Share WhatsApp
 function shareWhatsApp() {
   const summary = `🎉 *UNDANGAN KENCAN MALAM INI* 🎉
-Hai ${details.partnerName || 'kamu'}! Undangan kencan kita udah siap:
+Hai ${details.partnerName}! Undangan kencan kita udah siap:
 
 📅 *Waktu:* ${details.dateTime}
-📍 *Lokasi:* ${details.locationName} (${details.locationAddress})
+📍 *Lokasi Penjemputan:* ${details.locationName} (${details.locationAddress})
 👗 *Dresscode:* ${details.dresscode}
 🛵 *Transportasi:* ${details.transportation}
 💌 *Notes:* ${details.specialNotes}
 
-Sampai ketemu malem ini ya! ❤️✨`;
+Sampai ketemu malem ini ya sayang! ❤️✨`;
 
   const phone = details.myPhone.replace(/[^0-9]/g, '');
   const url = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(summary)}` : `https://wa.me/?text=${encodeURIComponent(summary)}`;
@@ -301,6 +305,14 @@ function setBackground(url) {
   if (!url) {
     bgImg.style.opacity = '0';
   } else {
+    // Graceful fallback in case file extension differences (.JPEG / .jpeg / .jpg)
+    bgImg.onerror = () => {
+      if (url.endsWith('.JPEG')) {
+        bgImg.src = url.replace('.JPEG', '.jpeg');
+      } else if (url.endsWith('.jpeg')) {
+        bgImg.src = url.replace('.jpeg', '.jpg');
+      }
+    };
     bgImg.src = url;
     bgImg.style.opacity = '1';
   }
@@ -323,7 +335,7 @@ function renderBackgroundGrid() {
     item.className = 'group relative rounded-xl overflow-hidden border-2 border-gray-200 dark:border-slate-700 hover:border-rose-400 aspect-video flex flex-col justify-end p-2 text-left cursor-pointer transition-all';
     
     if (bg.url) {
-      item.innerHTML = `<img src="${bg.url}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform" /><div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div><span class="relative z-10 text-[10px] font-bold text-white line-clamp-1">${bg.name}</span>`;
+      item.innerHTML = `<img src="${bg.url}" onerror="this.src='https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=400&q=80'" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform" /><div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div><span class="relative z-10 text-[10px] font-bold text-white line-clamp-1">${bg.name}</span>`;
     } else {
       item.innerHTML = `<div class="absolute inset-0 bg-gradient-to-br from-pink-100 to-rose-200 dark:from-slate-800 dark:to-slate-900"></div><span class="relative z-10 text-[10px] font-bold text-gray-800 dark:text-white line-clamp-1">${bg.name}</span>`;
     }
@@ -353,37 +365,26 @@ function handleCustomUpload(e) {
   }
 }
 
-function handleCustomLocalPath(e) {
-  e.preventDefault();
-  const input = document.getElementById('input-local-path');
-  let path = input.value.trim();
-  if (path) {
-    if (!path.startsWith('./') && !path.startsWith('/') && !path.startsWith('http')) {
-      path = `./backgrounds/${path}`;
-    }
-    const newBg = { id: `local-${Date.now()}`, name: path.replace('./backgrounds/', ''), url: path };
-    BACKGROUNDS.unshift(newBg);
-    renderBackgroundGrid();
-    setBackground(newBg.url);
-    input.value = '';
-    closeBgModal();
-  }
+function startAutoSlide() {
+  const btn = document.getElementById('btn-auto-slide');
+  btn.classList.add('bg-rose-500', 'text-white');
+  btn.classList.remove('bg-white', 'dark:bg-slate-800');
+  btn.innerText = '⏸ Slideshow Aktif (7s)';
+  if (autoSlideInterval) clearInterval(autoSlideInterval);
+  autoSlideInterval = setInterval(() => {
+    currentBgIndex = (currentBgIndex + 1) % BACKGROUNDS.length;
+    setBackground(BACKGROUNDS[currentBgIndex].url);
+  }, 7000);
 }
 
 function toggleAutoSlide() {
   isAutoSlide = !isAutoSlide;
   const btn = document.getElementById('btn-auto-slide');
   if (isAutoSlide) {
-    btn.classList.add('bg-rose-500', 'text-white');
-    btn.classList.remove('bg-gray-100', 'dark:bg-slate-800');
-    btn.innerText = '⏸ Slideshow Aktif (7s)';
-    autoSlideInterval = setInterval(() => {
-      currentBgIndex = (currentBgIndex + 1) % BACKGROUNDS.length;
-      setBackground(BACKGROUNDS[currentBgIndex].url);
-    }, 7000);
+    startAutoSlide();
   } else {
     btn.classList.remove('bg-rose-500', 'text-white');
-    btn.classList.add('bg-gray-100', 'dark:bg-slate-800');
+    btn.classList.add('bg-white', 'dark:bg-slate-800');
     btn.innerText = '▶ Putar Slideshow Otomatis';
     clearInterval(autoSlideInterval);
   }
