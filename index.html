@@ -177,7 +177,7 @@
 
             <!-- Grid Options -->
             <div class="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mb-5">
-              <!-- LOCKED: Dinner Mewah -->
+              <!-- LOCKED: Dinner Mewah (Click opens Sokoban Challenge) -->
               <div
                 id="card-mewah"
                 onclick="handleLockedDinner()"
@@ -210,7 +210,7 @@
               <div class="flex-1">
                 <p class="font-bold text-rose-800 dark:text-rose-200 mb-0.5">Fitur Dinner Mewah Terkunci 🔒</p>
                 <p class="text-rose-600 dark:text-rose-300 text-xs leading-relaxed">
-                  Belum ada duitnya neng! Pilih <span class="font-bold underline">"Dinner Santai"</span> dijamin lebih seru, kenyang, dan bahagia bareng, ramah dompet ✨
+                  Selesaikan Sokoban Challenge untuk membuka Dinner Mewah (Fine Dining + Bunga Lily 🌸)!
                 </p>
               </div>
               <button type="button" onclick="closeLockedAlert()" class="text-rose-400 hover:text-rose-700 text-xs font-bold px-1 cursor-pointer">✕</button>
@@ -287,7 +287,7 @@
             </p>
 
             <!-- Actions buttons -->
-              <div class="w-full flex flex-col sm:flex-row items-center justify-center gap-3">
+            <div class="w-full flex flex-col sm:flex-row items-center justify-center gap-3">
               <a
                 href="https://wa.me/6285890999711?text=Iyaa%20sayangg%2C%20aku%20terima%20ya%20tawarannya%2C%20love%20you%20more%20%F0%9F%92%96%E2%9C%A8"
                 target="_blank"
@@ -439,7 +439,8 @@
         </div>
       </div>
     </div>
-<!-- MODAL SOKOBAN CHALLENGE -->
+
+    <!-- MODAL SOKOBAN CHALLENGE -->
     <div id="sokoban-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/75 backdrop-blur-sm overflow-y-auto">
       <div class="bg-white dark:bg-slate-900 border border-rose-200 dark:border-slate-800 rounded-[28px] sm:rounded-[36px] w-full max-w-md shadow-2xl p-5 sm:p-6 my-auto text-center relative transition-all">
         <!-- Header -->
@@ -459,7 +460,7 @@
           <div class="flex items-center gap-1.5">
             <span class="font-bold text-gray-700 dark:text-gray-200">Level:</span>
             <select id="sokoban-level-select" onchange="changeSokobanLevel(this.value)" class="bg-white dark:bg-slate-900 border border-rose-200 dark:border-slate-700 rounded-lg px-2 py-1 font-bold text-rose-500 text-xs cursor-pointer">
-              <option value="1">Level 1 (Mudah / Tutorial)</option>
+              <option value="1" selected>Level 1 (Mudah / Tutorial)</option>
               <option value="2">Level 2 (Santai)</option>
               <option value="3">Level 3 (Lumayan Seru)</option>
               <option value="4">Level 4 (Mulai Mikir)</option>
@@ -468,7 +469,7 @@
               <option value="7">Level 7 (Makin Susah)</option>
               <option value="8">Level 8 (Pusing Dikit)</option>
               <option value="9">Level 9 (Master Sokoban)</option>
-              <option value="10" selected>Level 10 (🔥 Paling Susah)</option>
+              <option value="10">Level 10 (🔥 Paling Susah)</option>
             </select>
           </div>
           <div id="sokoban-stats" class="font-mono font-bold text-gray-700 dark:text-gray-300 text-xs">Langkah: <span id="sokoban-moves" class="text-rose-500 font-extrabold">0</span></div>
