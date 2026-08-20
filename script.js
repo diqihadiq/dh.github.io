@@ -239,20 +239,22 @@ function handleAccept() {
   showStep(2);
 }
 
-// Step 2 logic
+// Step 2 logic: Click Dinner Mewah opens Sokoban Mini-Game Modal
 function handleLockedDinner() {
   playLockSound();
-  const alertBox = document.getElementById('locked-alert');
   const card = document.getElementById('card-mewah');
+  if (card) {
+    card.classList.add('shake');
+    setTimeout(() => card.classList.remove('shake'), 400);
+  }
   
-  card.classList.add('shake');
-  setTimeout(() => card.classList.remove('shake'), 400);
-  
-  alertBox.classList.remove('hidden');
+  // Langsung buka game Sokoban Challenge
+  openSokobanModal();
 }
 
 function closeLockedAlert() {
-  document.getElementById('locked-alert').classList.add('hidden');
+  const alertBox = document.getElementById('locked-alert');
+  if (alertBox) alertBox.classList.add('hidden');
 }
 
 function handleChooseMurah() {
@@ -487,6 +489,7 @@ function applyTransparency() {
 function toggleDarkMode() {
   document.documentElement.classList.toggle('dark');
 }
+
 /* =========================================================
    SOKOBAN MINI-GAME ENGINE (Levels 1 - 10, Lily Flowers Target)
    ========================================================= */
@@ -638,10 +641,12 @@ function loadSokobanLevel(lvl) {
 
   renderSokobanBoard();
 }
+
 function updateSokobanMovesUI() {
   const movesEl = document.getElementById('sokoban-moves');
   if (movesEl) movesEl.innerText = sokobanMoves;
 }
+
 function renderSokobanBoard() {
   const boardEl = document.getElementById('sokoban-board');
   if (!boardEl) return;
@@ -816,8 +821,8 @@ function unlockDinnerMewah() {
   details.locationName = 'Fine Dining Romantic 💎🌸';
   details.locationAddress = 'RAHASIA + Spesial Buket Bunga Lily Cantik 💐✨';
   details.dateTime = 'Malam ini pukul 19.00 (dijemput dengan buket Bunga Lily 🌸)';
-  details.dresscode = 'Formal/ Dress Anggun 👗✨';
-  details.transportation = 'Tetep naik rebecca sih✨';
+  details.dresscode = 'Formal / Dress Anggun 👗✨';
+  details.transportation = 'Tetep naik rebecca sih 🛵💨✨';
   details.specialNotes = 'Selamat sayang, kamu berhasil unlock Dinner Mewah! Nikmati Fine Dining romantis dan bunga lily kesukaanmu! 🌸💖';
 
   updateDetailsUI();
