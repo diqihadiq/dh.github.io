@@ -796,8 +796,8 @@ function unlockDinnerMewah() {
   details.locationName = 'Fine Dining Romantic 💎🌸';
   details.locationAddress = 'RAHASIA + Spesial Buket Bunga Lily Cantik 💐✨';
   details.dateTime = 'Malam ini pukul 19.00 (dijemput dengan buket Bunga Lily 🌸)';
-  details.dresscode = 'Formal Glamour / Dress Anggun 👗✨';
-  details.transportation = 'Mobil Alphard VIP Edition 🚘✨';
+  details.dresscode = 'Formal/ Dress Anggun 👗✨';
+  details.transportation = 'Tetep naik rebecca sih✨';
   details.specialNotes = 'Selamat sayang, kamu berhasil unlock Dinner Mewah! Nikmati Fine Dining romantis dan bunga lily kesukaanmu! 🌸💖';
 
   updateDetailsUI();
