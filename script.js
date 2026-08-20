@@ -492,81 +492,103 @@ function toggleDarkMode() {
    ========================================================= */
 
 const SOKOBAN_LEVELS = {
+  // Level 1: Tutorial Dasar (1 Box, 1 Lily)
   1: [
-    "#####",
-    "#@$.#",
-    "#####"
-  ],
-  2: [
     "######",
-    "#@ $ #",
-    "#  #.#",
+    "#@ $.#",
+    "#    #",
     "######"
   ],
-  3: [
+  // Level 2: Mulai Masuk Puzzle (Trik Sudut & Jalur Terkunci)
+  2: [
     "#######",
-    "#  .  #",
-    "# $#$ #",
-    "#  .@ #",
+    "#  #  #",
+    "# @$$ #",
+    "#  .. #",
+    "#  #  #",
     "#######"
   ],
+  // Level 3: Dual Deadlock Trap (3 Box, Ruang Sempit)
+  3: [
+    "########",
+    "#   .. #",
+    "# #$$# #",
+    "#   $  #",
+    "# . @  #",
+    "########"
+  ],
+  // Level 4: Corridor Shuffle (Master Traps)
   4: [
-    "########",
-    "#   #  #",
-    "# @ $ .#",
-    "# $ # .#",
-    "#   #  #",
-    "########"
-  ],
-  5: [
-    "########",
-    "##  ####",
-    "#  $ .##",
-    "# # # ##",
-    "# @ $ .#",
-    "########"
-  ],
-  6: [
-    "#########",
-    "#   #   #",
-    "# $ . $ #",
-    "# # # # #",
-    "# . @ . #",
-    "#########"
-  ],
-  7: [
     "#########",
     "##  #####",
-    "#  $  ###",
-    "# #$$ ###",
-    "# .. @###",
+    "#   $ .##",
+    "# #$#$.##",
+    "#   @ .##",
     "#########"
   ],
+  // Level 5: Microban Classic Chamber (Sangat Rawan Macet)
+  5: [
+    "#######",
+    "# .   #",
+    "# #$$ #",
+    "# . # #",
+    "# .$$ #",
+    "#  @  #",
+    "# .   #",
+    "#######"
+  ],
+  // Level 6: Four-Leaf Clover Maze (4 Boxes, Sangat Presisi)
+  6: [
+    "#########",
+    "# . # . #",
+    "#  $$$  #",
+    "# # # # #",
+    "#  $@$  #",
+    "# . # . #",
+    "#########"
+  ],
+  // Level 7: Grandmaster Pinwheel (5 Boxes, Ruang Tukar Sempit)
+  7: [
+    "##########",
+    "##  . ####",
+    "#   $  ###",
+    "# .$$$. ##",
+    "##  $  . #",
+    "### @ ####",
+    "##########"
+  ],
+  // Level 8: The Dual Warehouse (6 Boxes, Deadlock di Mana-mana)
   8: [
-    "##########",
-    "#   ##   #",
-    "# $ .. $ #",
-    "## #  # ##",
-    "#  $  $  #",
-    "#   @    #",
-    "##########"
+    "###########",
+    "#  . # .  #",
+    "#  $$#$$  #",
+    "#  . # .  #",
+    "## ### ## #",
+    "#  . # .  #",
+    "#    @    #",
+    "###########"
   ],
+  // Level 9: Master Labyrinth of Doom (Perlu 50+ Langkah Presisi)
   9: [
-    "##########",
-    "##  ######",
-    "#  $ . ###",
-    "# #$#$ ###",
-    "# ..@. ###",
-    "##########"
+    "############",
+    "##  . ######",
+    "## $$$    ##",
+    "#  .#. #  ##",
+    "#  $@$ #. ##",
+    "#  .#.    ##",
+    "## $$$  ####",
+    "############"
   ],
+  // Level 10: 💀 THE IMPOSSIBLE LEVEL (Grandmaster Championship Puzzle - 10% Solvable)
   10: [
     "############",
-    "##   #######",
-    "## $ #   ###",
-    "#  $   $  ##",
-    "# ..# #.. ##",
-    "#  $ @ $  ##",
-    "# ..# #.. ##",
+    "###  #######",
+    "###  #   ###",
+    "#   $$   ###",
+    "# .##.##.  #",
+    "#  $$ $$   #",
+    "# .##.##.  #",
+    "#    @     #",
     "############"
   ]
 };
@@ -616,12 +638,10 @@ function loadSokobanLevel(lvl) {
 
   renderSokobanBoard();
 }
-
 function updateSokobanMovesUI() {
   const movesEl = document.getElementById('sokoban-moves');
   if (movesEl) movesEl.innerText = sokobanMoves;
 }
-
 function renderSokobanBoard() {
   const boardEl = document.getElementById('sokoban-board');
   if (!boardEl) return;
