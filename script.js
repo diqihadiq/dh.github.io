@@ -487,3 +487,320 @@ function applyTransparency() {
 function toggleDarkMode() {
   document.documentElement.classList.toggle('dark');
 }
+/* =========================================================
+   SOKOBAN MINI-GAME ENGINE (Levels 1 - 10, Lily Flowers Target)
+   ========================================================= */
+
+const SOKOBAN_LEVELS = {
+  1: [
+    "#####",
+    "#@$.#",
+    "#####"
+  ],
+  2: [
+    "######",
+    "#@ $ #",
+    "#  #.#",
+    "######"
+  ],
+  3: [
+    "#######",
+    "#  .  #",
+    "# $#$ #",
+    "#  .@ #",
+    "#######"
+  ],
+  4: [
+    "########",
+    "#   #  #",
+    "# @ $ .#",
+    "# $ # .#",
+    "#   #  #",
+    "########"
+  ],
+  5: [
+    "########",
+    "##  ####",
+    "#  $ .##",
+    "# # # ##",
+    "# @ $ .#",
+    "########"
+  ],
+  6: [
+    "#########",
+    "#   #   #",
+    "# $ . $ #",
+    "# # # # #",
+    "# . @ . #",
+    "#########"
+  ],
+  7: [
+    "#########",
+    "##  #####",
+    "#  $  ###",
+    "# #$$ ###",
+    "# .. @###",
+    "#########"
+  ],
+  8: [
+    "##########",
+    "#   ##   #",
+    "# $ .. $ #",
+    "## #  # ##",
+    "#  $  $  #",
+    "#   @    #",
+    "##########"
+  ],
+  9: [
+    "##########",
+    "##  ######",
+    "#  $ . ###",
+    "# #$#$ ###",
+    "# ..@. ###",
+    "##########"
+  ],
+  10: [
+    "############",
+    "##   #######",
+    "## $ #   ###",
+    "#  $   $  ##",
+    "# ..# #.. ##",
+    "#  $ @ $  ##",
+    "# ..# #.. ##",
+    "############"
+  ]
+};
+
+let currentSokobanLevel = 1;
+let sokobanGrid = [];
+let sokobanPlayer = { r: 0, c: 0 };
+let sokobanMoves = 0;
+
+function openSokobanModal() {
+  const modal = document.getElementById('sokoban-modal');
+  if (!modal) return;
+  modal.classList.remove('hidden');
+  currentSokobanLevel = 1;
+  const levelSelect = document.getElementById('sokoban-level-select');
+  if (levelSelect) levelSelect.value = "1";
+  loadSokobanLevel(1);
+}
+
+function closeSokobanModal() {
+  const modal = document.getElementById('sokoban-modal');
+  if (modal) modal.classList.add('hidden');
+}
+
+function changeSokobanLevel(lvl) {
+  currentSokobanLevel = parseInt(lvl, 10);
+  loadSokobanLevel(currentSokobanLevel);
+}
+
+function resetSokobanLevel() {
+  loadSokobanLevel(currentSokobanLevel);
+}
+
+function loadSokobanLevel(lvl) {
+  const rawMap = SOKOBAN_LEVELS[lvl] || SOKOBAN_LEVELS[10];
+  sokobanMoves = 0;
+  updateSokobanMovesUI();
+
+  sokobanGrid = rawMap.map((row, rIdx) => {
+    return row.split('').map((ch, cIdx) => {
+      if (ch === '@' || ch === '+') {
+        sokobanPlayer = { r: rIdx, c: cIdx };
+      }
+      return ch;
+    });
+  });
+
+  renderSokobanBoard();
+}
+
+function updateSokobanMovesUI() {
+  const movesEl = document.getElementById('sokoban-moves');
+  if (movesEl) movesEl.innerText = sokobanMoves;
+}
+
+function renderSokobanBoard() {
+  const boardEl = document.getElementById('sokoban-board');
+  if (!boardEl) return;
+  boardEl.innerHTML = '';
+
+  const table = document.createElement('div');
+  table.className = 'flex flex-col items-center justify-center';
+
+  sokobanGrid.forEach((row) => {
+    const rowEl = document.createElement('div');
+    rowEl.className = 'flex';
+
+    row.forEach((cell) => {
+      const cellEl = document.createElement('div');
+      cellEl.className = 'w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-sm sm:text-base select-none font-bold rounded-md m-[1px] transition-all';
+
+      if (cell === '#') {
+        cellEl.className += ' bg-slate-700 dark:bg-slate-800 text-slate-400 border border-slate-600';
+        cellEl.innerText = '🧱';
+      } else if (cell === '.') {
+        cellEl.className += ' bg-pink-100 dark:bg-pink-950/60 border border-pink-300';
+        cellEl.innerText = '🌸';
+      } else if (cell === '$') {
+        cellEl.className += ' bg-amber-100 dark:bg-amber-950 border border-amber-400 shadow-sm';
+        cellEl.innerText = '📦';
+      } else if (cell === '*') {
+        cellEl.className += ' bg-rose-200 dark:bg-rose-900 border-2 border-rose-500 shadow-md animate-pulse';
+        cellEl.innerText = '💖';
+      } else if (cell === '@') {
+        cellEl.className += ' bg-rose-50 dark:bg-slate-800 border border-rose-300';
+        cellEl.innerText = '🏃‍♀️';
+      } else if (cell === '+') {
+        cellEl.className += ' bg-pink-200 dark:bg-pink-900 border border-rose-400';
+        cellEl.innerText = '🏃‍♀️';
+      } else {
+        cellEl.className += ' bg-white/60 dark:bg-slate-900/60 border border-dashed border-gray-200 dark:border-slate-800';
+      }
+
+      rowEl.appendChild(cellEl);
+    });
+
+    table.appendChild(rowEl);
+  });
+
+  boardEl.appendChild(table);
+}
+
+function moveSokoban(direction) {
+  const dirOffsets = {
+    up: { dr: -1, dc: 0 },
+    down: { dr: 1, dc: 0 },
+    left: { dr: 0, dc: -1 },
+    right: { dr: 0, dc: 1 }
+  };
+
+  const { dr, dc } = dirOffsets[direction] || { dr: 0, dc: 0 };
+  const curR = sokobanPlayer.r;
+  const curC = sokobanPlayer.c;
+  const nextR = curR + dr;
+  const nextC = curC + dc;
+
+  if (nextR < 0 || nextR >= sokobanGrid.length || nextC < 0 || nextC >= sokobanGrid[0].length) {
+    return;
+  }
+
+  const targetCell = sokobanGrid[nextR][nextC];
+
+  if (targetCell === '#') return;
+
+  if (targetCell === ' ' || targetCell === '.') {
+    sokobanGrid[curR][curC] = sokobanGrid[curR][curC] === '+' ? '.' : ' ';
+    sokobanGrid[nextR][nextC] = targetCell === '.' ? '+' : '@';
+    sokobanPlayer = { r: nextR, c: nextC };
+    sokobanMoves++;
+    playPop();
+    updateSokobanMovesUI();
+    renderSokobanBoard();
+    return;
+  }
+
+  if (targetCell === '$' || targetCell === '*') {
+    const boxNextR = nextR + dr;
+    const boxNextC = nextC + dc;
+
+    if (boxNextR < 0 || boxNextR >= sokobanGrid.length || boxNextC < 0 || boxNextC >= sokobanGrid[0].length) {
+      return;
+    }
+
+    const boxDest = sokobanGrid[boxNextR][boxNextC];
+
+    if (boxDest === ' ' || boxDest === '.') {
+      sokobanGrid[boxNextR][boxNextC] = boxDest === '.' ? '*' : '$';
+      sokobanGrid[nextR][nextC] = targetCell === '*' ? '+' : '@';
+      sokobanGrid[curR][curC] = sokobanGrid[curR][curC] === '+' ? '.' : ' ';
+
+      sokobanPlayer = { r: nextR, c: nextC };
+      sokobanMoves++;
+      playPop();
+      updateSokobanMovesUI();
+      renderSokobanBoard();
+
+      checkSokobanWin();
+    }
+  }
+}
+
+function checkSokobanWin() {
+  let hasUnsolvedBox = false;
+  for (let r = 0; r < sokobanGrid.length; r++) {
+    for (let c = 0; c < sokobanGrid[0].length; c++) {
+      if (sokobanGrid[r][c] === '$') {
+        hasUnsolvedBox = true;
+        break;
+      }
+    }
+    if (hasUnsolvedBox) break;
+  }
+
+  if (!hasUnsolvedBox) {
+    playSuccess();
+    triggerConfetti();
+
+    if (currentSokobanLevel < 10) {
+      // Otomatis Naik Level!
+      const nextLvl = currentSokobanLevel + 1;
+      setTimeout(() => {
+        alert(`✨ YAY! Level ${currentSokobanLevel} Berhasil! Lanjut ke Level ${nextLvl} ya sayang! 🌸🏃‍♀️`);
+        currentSokobanLevel = nextLvl;
+        const levelSelect = document.getElementById('sokoban-level-select');
+        if (levelSelect) levelSelect.value = nextLvl.toString();
+        loadSokobanLevel(nextLvl);
+      }, 250);
+    } else {
+      // Berhasil Tamat Level 10 -> Unlock Fine Dining & Bunga Lily!
+      setTimeout(() => {
+        alert('🎉 LUAR BIASA SAYANG! Kamu berhasil menamatkan sampai Level 10! Fitur Dinner Mewah (Fine Dining + Bunga Lily 🌸) Resmi Terbuka! 💎✨');
+        closeSokobanModal();
+        unlockDinnerMewah();
+      }, 300);
+    }
+  }
+}
+
+window.addEventListener('keydown', (e) => {
+  const modal = document.getElementById('sokoban-modal');
+  if (!modal || modal.classList.contains('hidden')) return;
+
+  if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
+    e.preventDefault();
+    moveSokoban('up');
+  } else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
+    e.preventDefault();
+    moveSokoban('down');
+  } else if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+    e.preventDefault();
+    moveSokoban('left');
+  } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+    e.preventDefault();
+    moveSokoban('right');
+  } else if (e.key === 'r' || e.key === 'R') {
+    resetSokobanLevel();
+  }
+});
+
+function surrenderSokoban() {
+  playPop();
+  closeSokobanModal();
+  handleChooseMurah();
+}
+
+function unlockDinnerMewah() {
+  details.locationName = 'Fine Dining Romantic 💎🌸';
+  details.locationAddress = 'RAHASIA + Spesial Buket Bunga Lily Cantik 💐✨';
+  details.dateTime = 'Malam ini pukul 19.00 (dijemput dengan buket Bunga Lily 🌸)';
+  details.dresscode = 'Formal Glamour / Dress Anggun 👗✨';
+  details.transportation = 'Mobil Alphard VIP Edition 🚘✨';
+  details.specialNotes = 'Selamat sayang, kamu berhasil unlock Dinner Mewah! Nikmati Fine Dining romantis dan bunga lily kesukaanmu! 🌸💖';
+
+  updateDetailsUI();
+  showStep(3);
+  triggerConfetti();
+}
